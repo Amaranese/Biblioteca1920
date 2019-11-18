@@ -87,7 +87,7 @@ class PasswordController extends Controller
      * @param  \App\Password  $password
      * @return \Illuminate\Http\Response
      */
-    public function show(Password $password)
+    public function show(Biblioteca1920 $bIBLIOTECA1920)
     {
         //
     }
@@ -97,7 +97,7 @@ class PasswordController extends Controller
      * @param  \App\Password  $password
      * @return \Illuminate\Http\Response
      */
-    public function edit(Password $password)
+    public function edit(Biblioteca1920 $bIBLIOTECA1920)
     {
         //
     }

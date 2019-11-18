@@ -95,7 +95,7 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Biblioteca1920 $bIBLIOTECA1920)
     {
         //
     }

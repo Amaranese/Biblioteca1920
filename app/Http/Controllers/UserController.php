@@ -95,7 +95,7 @@ class UserController extends Controller
      * @param  \App\GPASS  $gPASS
      * @return \Illuminate\Http\Response
      */
-    public function edit(GPASS $gPASS)
+    public function edit(Biblioteca1920 $bIBLIOTECA1920)
     {
         //
     }
@@ -106,7 +106,7 @@ class UserController extends Controller
      * @param  \App\GPASS  $gPASS
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, GPASS $gPASS)
+    public function update(Request $request, Biblioteca1920 $bIBLIOTECA1920)
     {
         //
     }
