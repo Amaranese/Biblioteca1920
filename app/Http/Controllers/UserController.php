@@ -15,7 +15,6 @@ class UserController extends Controller
     {
         //
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -25,7 +24,6 @@ class UserController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -42,10 +40,8 @@ class UserController extends Controller
             );
         } else {
             $user = new User();
-
             $user->name = str_replace(' ', '', $request->name);
             $repeatedEmail = User::where('email', $request->email)->first();
-
             if ($repeatedEmail != true) {
                 if (!strpos($request->email, "@") || !strpos($request->email, ".")) 
                 {
@@ -60,7 +56,6 @@ class UserController extends Controller
                     'MESSAGE' => 'The email is in use'], 400
                 );
             }
-        
             if (strlen($request->password) > 7)
             {
                 $user->password = encrypt($request->password);
@@ -72,21 +67,18 @@ class UserController extends Controller
             }
             $user->role_id = 2;
             $user->save();
-
             $tokenParams = [
                 'id' => $user->id,
                 'password' => $_POST['password'],
                 'email' => $_POST['email'],
             ];
             $token = JWT::encode($tokenParams, $this->key);
-
             return response()->json([
                 'MESSAGE' => $token, 'The user has been created correctly'], 200
             );
         }
         
     }
-
     /**
      * Display the specified resource.
      *
@@ -97,7 +89,6 @@ class UserController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -108,8 +99,7 @@ class UserController extends Controller
     {
         //
     }
-
-    /**
+     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

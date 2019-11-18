@@ -16,9 +16,24 @@ class LibroController extends Controller
      */
     public function index()
     {
-        //
+        $header = getallheaders();
+        if (!empty($header['Authorization'])) {
+            $userLogged = JWT::decode($header['Authorization'], $this->key, array('HS256'));
+            $userLibros = Libro::where('user_id', $userLogged->id)->get();
+            if (count($userLibros) > 0) {
+                return response()->json([
+                    'MESSAGE' => $userLibros], 200
+                );
+            }
+            return response()->json([
+                'MESSAGE' => 'Dont have any category created yet'], 404
+            );
+        }else{
+            return response()->json([
+                'MESSAGE' => 'You dont have enough permission'], 403
+            );
+        }
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -28,7 +43,6 @@ class LibroController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -37,9 +51,33 @@ class LibroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $header = getallheaders();
+        if (!empty($header['Authorization'])) {
+            $userLogged = JWT::decode($header['Authorization'], $this->key, array('HS256'));
+            if (empty($request->name)) {
+                return response()->json([
+                    'MESSAGE' => 'You have to put a name for your book'], 400
+                );
+            }
+            $repeatedBook = Book::where('name', $request->name)->first();
+            if (!is_null($repeatedBook) && $repeatedBook->user_id == $userLogged->id) {
+                return response()->json([
+                    'MESSAGE' => 'The specified book name already exists'], 400
+                );
+            }
+            $book = new Book();
+            $book->name = str_replace(' ', '', $request->name);
+            $book->user_id = $userLogged->id;
+            $book->save();
+            return response()->json([
+                'MESSAGE' => 'The book has been created correctly'], 200
+            );
+        }else{
+            return response()->json([
+                'MESSAGE' => 'You dont have enough permission'], 403
+            );
+        }
     }
-
     /**
      * Display the specified resource.
      *
@@ -50,7 +88,6 @@ class LibroController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -61,7 +98,6 @@ class LibroController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -73,7 +109,6 @@ class LibroController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *

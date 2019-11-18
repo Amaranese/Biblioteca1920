@@ -12,13 +12,11 @@ class LoginController extends Controller
     public function login()
     {
         $user = User::where('email', $_POST['email'])->first();
-
         if (empty($_POST['email']) || empty($_POST['password'])) {
             return response()->json([
                 'MESSAGE' => 'Some fields are empty'], 400
             );
         }
-        
         if (!is_null($user)) 
         {
             if (decrypt($user->password) != $_POST['password']) {

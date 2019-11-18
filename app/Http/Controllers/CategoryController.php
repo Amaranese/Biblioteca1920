@@ -35,7 +35,6 @@ class CategoryController extends Controller
             );
         }
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -45,7 +44,6 @@ class CategoryController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -55,7 +53,6 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $header = getallheaders();
-
         if (!empty($header['Authorization'])) {
             $userLogged = JWT::decode($header['Authorization'], $this->key, array('HS256'));
             if (empty($request->name)) {
@@ -70,11 +67,9 @@ class CategoryController extends Controller
                 );
             }
             $category = new Category();
-
             $category->name = str_replace(' ', '', $request->name);
             $category->user_id = $userLogged->id;
             $category->save();
-
             return response()->json([
                 'MESSAGE' => 'The category has been created correctly'], 200
             );
@@ -83,9 +78,7 @@ class CategoryController extends Controller
                 'MESSAGE' => 'You dont have enough permission'], 403
             );
         }
-
     }
-
     /**
      * Display the specified resource.
      *
@@ -96,7 +89,6 @@ class CategoryController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -107,7 +99,6 @@ class CategoryController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -149,16 +140,12 @@ class CategoryController extends Controller
                     );
                 }
             }
-            
-            
         }else{
             return response()->json([
                 'MESSAGE' => 'Dont have enough permission'], 403
             );
         }
     }
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -177,7 +164,6 @@ class CategoryController extends Controller
                 );
             }
             foreach ($userCategories as $key => $value) {
-
                 if ($value->user_id == $userLogged->id) {
                     $category->delete();
                     return response()->json([

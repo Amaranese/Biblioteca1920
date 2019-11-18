@@ -35,7 +35,6 @@ class PasswordController extends Controller
             );
         }
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -45,7 +44,6 @@ class PasswordController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -58,10 +56,8 @@ class PasswordController extends Controller
         if (!empty($header['Authorization'])) {
             $userLogged = JWT::decode($header['Authorization'], $this->key, array('HS256'));
             $password = New Password();
-
             $password->title = $request->title;
             $passwords = Password::all();
-
             foreach ($passwords as $key => $value) {
                 if (decrypt($value->password) == $request->password && $userLogged->id == $value->user_id) {
                     return response()->json([
@@ -75,9 +71,8 @@ class PasswordController extends Controller
             if (!empty($selectedCategory)) {
                 $password->category_id = $selectedCategory->id;
              } 
-            
-            $password->save();
-            return response()->json([
+             $password->save();
+             return response()->json([
                 'MESSAGE' => 'The password has been created correctly'], 200
             );
         }else{
@@ -86,7 +81,6 @@ class PasswordController extends Controller
             );
         }
     }
-
     /**
      * Display the specified resource.
      *
@@ -97,7 +91,6 @@ class PasswordController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -108,7 +101,6 @@ class PasswordController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -128,7 +120,6 @@ class PasswordController extends Controller
             }
 
             $password->title = str_replace(' ', '', $request->title);
-
             $userPasswords = Password::where('user_id', $userLogged->id)->get();
             if (count($userPasswords) >= 0) {
                 foreach ($userPasswords as $key => $value) {
@@ -156,7 +147,6 @@ class PasswordController extends Controller
             );
         }
     }
-
     /**
      * Remove the specified resource from storage.
      *
