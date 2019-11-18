@@ -24,3 +24,4 @@ Route::apiResource('password', 'PasswordController');
 Route::apiResource('category', 'CategoryController');
 
 Route::post('login', 'LoginController@login');
+Route::apiResource('libro', 'LibroController');
