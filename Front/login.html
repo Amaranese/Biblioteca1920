@@ -14,8 +14,8 @@
 	#contenedor {
 		border: 2px solid black;
 		background: #98C4F0;
-        width: 20%;
-        height: 40%;
+        width: 30%;
+        height: 50%;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -53,7 +53,7 @@
 	function login() {
 		var email = document.getElementById('email').value;
 		var password = document.getElementById('password').value;
-		$.ajax({
+		$.ajax( {
 				url: 'http://localhost/Biblioteca1920/public/index.php/api/login',
 
 			 	data: {	

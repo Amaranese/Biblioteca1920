@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Main Page</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style>
+		td {
+			padding: 5px 5px;
+			font-family: 'Helvetica';
+			border-bottom: 1px solid white;
+			width: 180px;
+			height: 30px;
+		}
+		h1 {
+			font-family: 'Calibri';
+		}
+		nav {
+	    	background: #2D92F7;
+	    	/*text-align: left;*/
+	    	padding: 5px;
+	 	}
+	 	nav a {
+        	color: white;
+        	text-decoration: none;
+        	font-size: 1rem;
+        	padding: 5px 20px;
+        	font-family: 'Helvetica';
+     	}
+     	nav a:hover {
+        	background: #003D7A;
+     	}
+		table{
+			width: 500px;
+		}
+		tr:nth-child(odd) {
+			background: #A8FF9D;
+		}
+		tr:nth-child(1) td {
+			background: #D9ECFF;
+			font-weight: bold;
+			color: black;
+		}
+		td:nth-child(1) {
+         	border: 1px #D9ECFF solid;
+         	background: black;
+         	font-weight: bold;
+    	}
+    </style>
+</head>
+<body>
+	<h1>Main Page Gpass</h1>
+	<nav>
+		<!--<a href="http://localhost/GPASS/FrontendGpass/create_category.html">Crear categoria</a>-->
+		<a href="http://localhost/Biblioteca1920/Front/create_category.html">Crear categoria</a>
+		<a href="http://localhost/Biblioteca1920/Front/main.html">Lista de Contrasenias</a>
+		<a href="http://localhost/Biblioteca1920/Front/login.html" onclick="closeSession();">Cerrar sesion</a>
+	</nav>
+	<table class="table">
+		<thead>
+			<tr>
+				<td id="name">Title</td>
+			</tr>
+		</thead>
+	</table>
+</body>
+<script>
+	window.onload = function() {
+		checkLogin();
+		getCategories();
+	};
+	function checkLogin(){
+		var token = sessionStorage.getItem('token');
+		if (token == null) {
+			window.location.href="http://localhost:80/Biblioteca1920/Front/login.html";
+		}
+	}
+	function getCategories(){
+		$.ajax({
+			url: 'http://localhost/Biblioteca1920/public/index.php/api/category',
+			type: 'GET',
+			dataType:'json',
+			beforeSend: function(request) {
+		 		request.setRequestHeader("Authorization", sessionStorage.getItem("token"));
+		 	},
+		 	success : function(response) {
+				for (var i = 0; i<response.MESSAGE.length; i++) {
+					$('#name').append('<tr><td>'+response.MESSAGE[i].name+'</td><td>'+'<button onclick="goToEdit('+response.MESSAGE[i].id+');">Edit'+'<button onclick="deleteCategory('+response.MESSAGE[i].id+');">Delete');
+				}
+		 	},
+		 	error : function (xhr, status) {
+		 		console.log('Error getting users');
+		 	},
+		 	complete : function(xhr, status) {
+				console.log('Petition complete');
+		 	}
+		
+		 });
+	}
+	function deleteCategory(id){
+			$.ajax({
+				beforeSend: function(request) {
+			 		request.setRequestHeader("Authorization", sessionStorage.getItem("token"));
+			 	},
+			 	url: 'http://localhost/Biblioteca1920/public/index.php/api/category/'+id,
+			 	type: 'DELETE',
+			 	success : function(response) {
+					alert(response.MESSAGE);
+					window.location.href="http://localhost/Biblioteca1920/Front/main_categories.html";
+				},
+				error : function (xhr, status) {
+					console.log(xhr);
+					console.log(status);
+					console.log('dio error');
+				}
+			})
+		}
+		function goToEdit(id){
+		sessionStorage.setItem('id', id);
+		window.location.href="http://localhost/Biblioteca1920/Front/edit_category.html";
+	}
+</script>
+</html>
