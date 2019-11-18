@@ -107,7 +107,43 @@ class LibroController extends Controller
      */
     public function update(Request $request, Libro $libro)
     {
-        //
+        $header = getallheaders();
+        if (!empty($header['Authorization'])) {
+            $userLogged = JWT::decode($header['Authorization'], $this->key, array('HS256'));
+            if (empty($request->name)) {
+                return response()->json([
+                    'MESSAGE' => 'You have to change the category name'], 400
+                );
+            }
+            $userLibros = Libro::where('user_id', $userLogged->id)->get();
+            if (count($userLibros) == 0) {
+                return response()->json([
+                    'MESSAGE' => 'Dont have enough permission'], 403
+                );
+            }
+            foreach ($userLibros as $key => $value) {
+                if ($value->name == $request->name) {
+                    return response()->json([
+                        'MESSAGE' => 'The specified book name is already created'], 400
+                    );
+                }
+                if ($value->user_id == $userLogged->id) {
+                    $book->name = str_replace(' ', '', $request->name);
+                    $book->save();
+                    return response()->json([
+                        'MESSAGE' => 'The book has been updated correctly'], 200
+                    );
+                }else{
+                    return response()->json([
+                        'MESSAGE' => 'Dont have enough permission'], 403
+                    );
+                }
+            }
+        }else{
+            return response()->json([
+                'MESSAGE' => 'Dont have enough permission'], 403
+            );
+        }
     }
     /**
      * Remove the specified resource from storage.
@@ -117,6 +153,31 @@ class LibroController extends Controller
      */
     public function destroy(Libro $libro)
     {
-        //
+         $header = getallheaders();
+        if (!empty($header['Authorization'])) {
+            $userLogged = JWT::decode($header['Authorization'], $this->key, array('HS256'));
+            $userLibros = Libro::where('user_id', $userLogged->id)->get();
+            if (count($userLibros) == 0) {
+                return response()->json([
+                    'MESSAGE' => 'Dont have enough permission'], 403
+                );
+            }
+            foreach ($userLibros as $key => $value) {
+                if ($value->user_id == $userLogged->id) {
+                    $libro->delete();
+                    return response()->json([
+                        'MESSAGE' => 'The libro has been deleted correctly'], 200
+                    );
+                }else{
+                    return response()->json([
+                        'MESSAGE' => 'Dont have enough permission'], 403
+                    );
+                }
+            }
+        }else{
+            return response()->json([
+                'MESSAGE' => 'Dont have enough permission'], 403
+            );
+        }
     }
 }
