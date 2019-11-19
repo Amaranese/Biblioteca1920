@@ -54,9 +54,8 @@
 		var email = document.getElementById('email').value;
 		var password = document.getElementById('password').value;
 		$.ajax( {
-				url: 'http://localhost/Biblioteca1920/public/index.php/api/login',
-
-			 	data: {	
+				url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/login',
+				data: {	
 			 		email: email,
 					password: password
 				},
@@ -65,7 +64,7 @@
 				success : function(data) {
 			 		console.log(data);
 			 		sessionStorage.setItem('token', data.MESSAGE);
-			 		window.location.href = "http://localhost/Biblioteca1920/Front/main.html";
+			 		window.location.href = "http://localhost:8888/Biblioteca1920/Front/main.html";
 			 	},
 			 	error : function (xhr, status) {
 			 		alert(xhr.responseJSON['MESSAGE']);
@@ -76,7 +75,7 @@
 			});
 		}
 		function register() {
-			window.location.href="http://localhost/Biblioteca1920/Front/registrar_usuario.html";
+			window.location.href="http://localhost:8888/Biblioteca1920/Front/registrar_usuario.html";
 		}
 	</script>
 </html>

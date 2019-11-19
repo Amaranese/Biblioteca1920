@@ -51,9 +51,9 @@
 	<h1>Main Page Gpass</h1>
 	<nav>
 		<!--<a href="http://localhost/GPASS/FrontendGpass/create_category.html">Crear categoria</a>-->
-		<a href="http://localhost/Biblioteca1920/Front/create_category.html">Crear categoria</a>
-		<a href="http://localhost/Biblioteca1920/Front/main.html">Lista de Contrasenias</a>
-		<a href="http://localhost/Biblioteca1920/Front/login.html" onclick="closeSession();">Cerrar sesion</a>
+		<a href="http://localhost:8888/Biblioteca1920/Front/create_category.html">Crear categoria</a>
+		<a href="http://localhost:8888/Biblioteca1920/Front/main.html">Lista de Contrasenias</a>
+		<a href="http://localhost:8888/Biblioteca1920/Front/login.html" onclick="closeSession();">Cerrar sesion</a>
 	</nav>
 	<table class="table">
 		<thead>
@@ -71,12 +71,12 @@
 	function checkLogin(){
 		var token = sessionStorage.getItem('token');
 		if (token == null) {
-			window.location.href="http://localhost:80/Biblioteca1920/Front/login.html";
+			window.location.href="http://localhost:8888/Biblioteca1920/Front/login.html";
 		}
 	}
 	function getCategories(){
 		$.ajax({
-			url: 'http://localhost/Biblioteca1920/public/index.php/api/category',
+			url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/category',
 			type: 'GET',
 			dataType:'json',
 			beforeSend: function(request) {
@@ -101,11 +101,11 @@
 				beforeSend: function(request) {
 			 		request.setRequestHeader("Authorization", sessionStorage.getItem("token"));
 			 	},
-			 	url: 'http://localhost/Biblioteca1920/public/index.php/api/category/'+id,
+			 	url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/category/'+id,
 			 	type: 'DELETE',
 			 	success : function(response) {
 					alert(response.MESSAGE);
-					window.location.href="http://localhost/Biblioteca1920/Front/main_categories.html";
+					window.location.href="http://localhost:8888/Biblioteca1920/Front/main_categories.html";
 				},
 				error : function (xhr, status) {
 					console.log(xhr);
@@ -116,7 +116,7 @@
 		}
 		function goToEdit(id){
 		sessionStorage.setItem('id', id);
-		window.location.href="http://localhost/Biblioteca1920/Front/edit_category.html";
+		window.location.href="http://localhost:8888/Biblioteca1920/Front/edit_category.html";
 	}
 </script>
 </html>

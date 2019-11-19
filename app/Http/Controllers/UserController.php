@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use \Firebase\JWT\JWT;
 
 class UserController extends Controller
 {

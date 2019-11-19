@@ -59,7 +59,7 @@
 		var email = document.getElementById('email').value;
 		var password = document.getElementById('password').value;
 		$.ajax({
-			url: "http://localhost/Biblioteca1920/public/index.php/api/user",
+			url: "http://localhost:8888/Biblioteca1920/public/index.php/api/user",
 			data: {
 			 		name: name,	
 			 		email: email,
@@ -70,7 +70,7 @@
 				success : function(data) {
 			 		alert(data[0]);
 			 		sessionStorage.setItem('token', data.MESSAGE);
-			 		window.location.href = "http://localhost/Biblioteca1920/Front/main.html";
+			 		window.location.href = "http://localhost:8888/Biblioteca1920/Front/main.html";
 			 	},
 			 	error : function (xhr, status) {
 			 		alert(xhr.responseJSON['MESSAGE']);

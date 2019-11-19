@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Role;
+use App\Biblioteca1920;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller

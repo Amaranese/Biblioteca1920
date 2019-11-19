@@ -47,7 +47,7 @@
 	function createCategory() {
 			var name = document.getElementById('name').value;
 			$.ajax({
-				url: 'http://localhost/Biblioteca1920/public/index.php/api/category',
+				url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/category',
 				data: {
 			 		name: name,	
 				},
@@ -58,7 +58,7 @@
 			 	},
 			 	success : function(data) {
 			 		alert(data.MESSAGE);
-			 		window.location.href = "http://localhost/Biblioteca1920/Front/main_categories.html";
+			 		window.location.href = "http://localhost:8888/Biblioteca1920/Front/main_categories.html";
 			 	},
 			 	error : function (xhr, status) {
 			 		alert(xhr.responseJSON['MESSAGE']);

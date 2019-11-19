@@ -8,11 +8,9 @@
 		font-family: 'Calibri';
 		margin-left: 10px;
 	}
-
 	td {
 		font-family: 'Helvetica';
 	}
-
 	#contenedor {
 		border: 2px solid black;
 		background: #98C4F0;
@@ -23,12 +21,10 @@
         left: 50%;
         transform: translate(-50%, -50%);
 	}
-
 	td {
 		padding-top: 20px;
         text-align: left;
     }
-
     button {
     	margin-left: 150px;
     	margin-top: 20px;
@@ -36,10 +32,8 @@
 	</style>
 </head>
 <body>
-
 	<div id="contenedor">
 	<h1>Editar Categoria </h1>
-
 	<table>
 		<tr>
 			<td>Name</td>
@@ -48,17 +42,12 @@
 	</table>
 	<button onclick="editCategory();">Editar categoria</button>
 	</div>
-
 </body>
-
 <script>
-	
-		function editCategory() {
-			var name = document.getElementById('name').value;
-
-			$.ajax({
-
-				url: 'http://localhost/Biblioteca1920/public/index.php/api/category/'+sessionStorage.getItem('id'),
+	function editCategory() {
+		var name = document.getElementById('name').value;
+		$.ajax({
+			url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/category/'+sessionStorage.getItem('id'),
 				beforeSend: function(request) {
 			 		request.setRequestHeader("Authorization", sessionStorage.getItem("token"));
 			 	},
@@ -69,7 +58,7 @@
 			 	dataType : 'json',
 			 	success : function(data) {
 			 		alert(data.MESSAGE);
-			 		window.location.href="http://localhost/Biblioteca1920/Front/main_categories.html";
+			 		window.location.href="http://localhost:8888/Biblioteca1920/Front/main_categories.html";
 			 	},
 			 	error : function (xhr, status) {
 			 		console.log(xhr.responseJSON.MESSAGE);
