@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Peticion Jquery</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style>
+		h1 {
+		font-family: 'Calibri';
+		margin-left: 10px;
+	}
+	td {
+		font-family: 'Helvetica';
+	}
+	#contenedor {
+		border: 2px solid black;
+		background: #98C4F0;
+        width: 20%;
+        height: 30%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+	}
+	td {
+		padding-top: 20px;
+        text-align: left;
+    }
+    button {
+    	margin-left: 150px;
+    	margin-top: 20px;
+    }
+	</style>
+</head>
+<body>
+	<div id="contenedor">
+	<h1>Editar Categoria </h1>
+	<table>
+		<tr>
+			<td>Name</td>
+			<td><input id="name" type="text" name="name" required></td>
+		</tr>
+	</table>
+	<button onclick="editCategory();">Editar libros</button>
+	</div>
+</body>
+<script>
+	function editCategory() {
+		var name = document.getElementById('name').value;
+		$.ajax({
+			url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/libro/'+sessionStorage.getItem('id'),
+				beforeSend: function(request) {
+			 		request.setRequestHeader("Authorization", sessionStorage.getItem("token"));
+			 	},
+			 	data: {
+			 		name:name,
+				},
+				type: 'PUT',
+			 	dataType : 'json',
+			 	success : function(data) {
+			 		alert(data.MESSAGE);
+			 		window.location.href="http://localhost:8888/Biblioteca1920/Front/main_libros.html";
+			 	},
+			 	error : function (xhr, status) {
+			 		console.log(xhr.responseJSON.MESSAGE);
+			 		console.log(xhr.MESSAGE); 
+			 		alert(xhr.responseJSON['MESSAGE']);
+			 	},
+			 	complete : function(xhr, status) {
+					console.log('Petition complete');
+			 	}
+			 });
+		}
+	</script>
+</html>

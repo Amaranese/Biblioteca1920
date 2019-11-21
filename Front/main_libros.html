@@ -48,18 +48,17 @@
     </style>
 </head>
 <body>
-	<h1>Main Page Gpass</h1>
+	<h1>Main Page Biblioteca</h1>
 	<nav>
-		<a href="http://localhost:8888/Biblioteca1920/Front/create_password.html">Crear contrasenia</a>
-		<a href="http://localhost:8888/Biblioteca1920/Front/main_categories.html">Lista Categorias</a>
-		<a href="http://localhost:8888/Biblioteca1920/Front/main_libros.html">Lista Libros</a>
+		<!--<a href="http://localhost/GPASS/FrontendGpass/create_category.html">Crear categoria</a>-->
+		<a href="http://localhost:8888/Biblioteca1920/Front/create_libro.html">Crear categoria</a>
+		<a href="http://localhost:8888/Biblioteca1920/Front/main.html">Lista de Libros</a>
 		<a href="http://localhost:8888/Biblioteca1920/Front/login.html" onclick="closeSession();">Cerrar sesion</a>
 	</nav>
 	<table class="table">
 		<thead>
 			<tr>
-				<td id="title">Title</td>
-				<td id="password">Password</td>
+				<td id="name">Title</td>
 			</tr>
 		</thead>
 	</table>
@@ -67,18 +66,17 @@
 <script>
 	window.onload = function() {
 		checkLogin();
-		getPasswords();
+		getCategories();
 	};
 	function checkLogin(){
 		var token = sessionStorage.getItem('token');
 		if (token == null) {
-			window.location.href="http://localhost:8888/Biblioteca1920/front/login.html";
+			window.location.href="http://localhost:8888/Biblioteca1920/Front/login.html";
 		}
 	}
-	function getPasswords(){
+	function getCategories(){
 		$.ajax({
-
-			url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/password',
+			url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/libro',
 			type: 'GET',
 			dataType:'json',
 			beforeSend: function(request) {
@@ -86,9 +84,7 @@
 		 	},
 		 	success : function(response) {
 				for (var i = 0; i<response.MESSAGE.length; i++) {
-					$('#title').append('<tr><td>'+response.MESSAGE[i].title+'</td></td>');
-					$('#password').append('<tr><td>'+response.MESSAGE[i].password+'</td><td>'+'<button onclick="goToEdit('+response.MESSAGE[i].id+');">Edit'+'<button onclick="deletePassword('+response.MESSAGE[i].id+');">Delete');
-					//$('#role_id').append('<tr><td>'+response[i].role_id+'</td><td>'+'<button onclick="goToEdit('+response[i].id+');">Edit'+'<button onclick="deleteUser('+response[i].id+');">Delete');
+					$('#name').append('<tr><td>'+response.MESSAGE[i].name+'</td><td>'+'<button onclick="goToEdit('+response.MESSAGE[i].id+');">Edit'+'<button onclick="deleteCategory('+response.MESSAGE[i].id+');">Delete');
 				}
 		 	},
 		 	error : function (xhr, status) {
@@ -100,16 +96,16 @@
 		
 		 });
 	}
-	function deletePassword(id){
+	function deleteCategory(id){
 			$.ajax({
 				beforeSend: function(request) {
 			 		request.setRequestHeader("Authorization", sessionStorage.getItem("token"));
 			 	},
-			 	url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/password/'+id,
+			 	url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/libro/'+id,
 			 	type: 'DELETE',
 			 	success : function(response) {
 					alert(response.MESSAGE);
-					window.location.href="http://localhost:8888/Biblioteca1920/Front/main.html";
+					window.location.href="http://localhost:8888/Biblioteca1920/Front/main_libros.html";
 				},
 				error : function (xhr, status) {
 					console.log(xhr);
@@ -120,7 +116,7 @@
 		}
 		function goToEdit(id){
 		sessionStorage.setItem('id', id);
-		window.location.href="http://localhost:8888/Biblioteca1920/Front/edit_password.html";
+		window.location.href="http://localhost:8888/Biblioteca1920/Front/edit_libros.html";
 	}
 </script>
 </html>
