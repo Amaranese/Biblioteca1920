@@ -112,7 +112,7 @@ class LibroController extends Controller
             $userLogged = JWT::decode($header['Authorization'], $this->key, array('HS256'));
             if (empty($request->name)) {
                 return response()->json([
-                    'MESSAGE' => 'You have to change the category name'], 400
+                    'MESSAGE' => 'You have to change the libro name'], 400
                 );
             }
             $userLibros = Libro::where('user_id', $userLogged->id)->get();
