@@ -48,7 +48,7 @@
     </style>
   </head>
   <body>
-    <h1>Main Page Gpass</h1>
+    <h1>Main Page Biblioteca</h1>
     <nav>
 		<a href="http://localhost/GPASS/FrontendGpass/create_libros.html">Crear libros</a>
 		<a href="http://localhost/GPASS/FrontendGpass/main_categories.html">Lista Libros</a>
@@ -102,11 +102,11 @@
       beforeSend: function(request) {
         request.setRequestHeader("Authorization", sessionStorage.getItem("token"));
 			 	},
-        url: 'http://localhost/GPASS/public/index.php/api/password/'+id,
+        url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/password/'+id,
         type: 'DELETE',
         success : function(response) {
           alert(response.MESSAGE);
-          window.location.href="http://localhost/GPASS/FrontendGpass/main.html";
+          window.location.href="http://localhost:8888/Biblioteca1920/Front/main.html";
 				},
         error : function (xhr, status) {
           console.log(xhr);
@@ -117,7 +117,7 @@
 		}
     function goToEdit(id){
       sessionStorage.setItem('id', id);
-      window.location.href="http://localhost/GPASS/FrontendGpass/edit_password.html";
+      window.location.href="http://localhost:8888/Biblioteca1920/Front/edit_password.html";
     }
   </script>
 </html>
