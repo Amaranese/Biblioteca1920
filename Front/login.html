@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<<!DOCTYPE html>
+<html>
+<head>
+  <title>Peticion Jquery</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style>
+    h1 {
+		font-family: 'Calibri';
+		margin-left: 10px;
+  }
+  td {
+		font-family: 'Helvetica';
+	}
+  #contenedor {
+		border: 2px solid black;
+		background: #98C4F0;
+        width: 30%;
+        height: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      td {
+        padding-top: 40px;
+        text-align: left;
+    }
+    button {
+    	margin-left: 175px;
+    	margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div id="contenedor">
+	<h1>Login usuario</h1>
+  <table>
+    <tr>
+      <td>Email</td>
+			<td><input id="email" type="text" name="Email" size="35" required></td>
+    </tr>
+    <tr>
+      <td>Password</td>
+      <td><input id="password" type="password" name="Password" size="35" required></td>
+    </tr>
+  </table>
+  <button onclick="login();">Login</button>
+  <br>
+  <button onclick="register();">Registrarse</button>
+</div>
+</body>
+<script>
+  function login() {
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    $.ajax({
+      url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/login',
+      data: {
+			 		email: email,
+					password: password
+				},
+        type: 'POST',
+        dataType : 'json',
+        success : function(data) {
+          console.log(data);
+          sessionStorage.setItem('token', data.MESSAGE);
+          window.location.href = "http://localhost:8888/Biblioteca1920/Front/main.html";
+			 	},
+        error : function (xhr, status) {
+			 		alert(xhr.responseJSON['MESSAGE']);
+			 	},
+        complete : function(xhr, status) {
+					console.log('Petition complete');
+        }
+			});
+		}
+    function register() {
+			window.location.href="http://localhost:8888/Biblioteca1920/Front/registrar_usuario.html";
+		}
+  </script>
+</html>
