@@ -15,7 +15,7 @@
       font-family: 'Calibri';
     }
     nav {
-      background: #2D92F7;
+      background: #ff009a;
 	    	/*text-align: left;*/
         padding: 5px;
       }
@@ -33,15 +33,15 @@
         width: 500px;
       }
       tr:nth-child(odd) {
-        background: #A8FF9D;
+        background: #00ffdf;
       }
       tr:nth-child(1) td {
-        background: #D9ECFF;
+        background: #ffc100;
         font-weight: bold;
 			  color: black;
       }
       td:nth-child(1) {
-        border: 1px #D9ECFF solid;
+        border: 1px #ffc100 solid;
         background: black;
         font-weight: bold;
       }
@@ -58,7 +58,7 @@
     <thead>
       <tr>
         <td id="title">Title</td>
-        <td id="password">Des</td>
+        <td id="password">Description</td>
       </tr>
     </thead>
   </table>
@@ -66,7 +66,7 @@
 <script>
   window.onload = function() {
     checkLogin();
-    getPasswords();
+    getBooks();
   };
   function checkLogin(){
     var token = sessionStorage.getItem('token');
@@ -74,9 +74,9 @@
 			window.location.href="http://localhost:8888/Biblioteca1920/Front/login.html";
 		}
 	}
-  function getPasswords(){
+  function getBooks(){
     $.ajax({
-      url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/password',
+      url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/libro',
       type: 'GET',
       dataType:'json',
       beforeSend: function(request) {
@@ -97,12 +97,12 @@
       }
     });
 	}
-  function deletePassword(id){
+  function deleteLibros(id){
     $.ajax({
       beforeSend: function(request) {
         request.setRequestHeader("Authorization", sessionStorage.getItem("token"));
 			 	},
-        url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/password/'+id,
+        url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/libro/'+id,
         type: 'DELETE',
         success : function(response) {
           alert(response.MESSAGE);
@@ -117,7 +117,7 @@
 		}
     function goToEdit(id){
       sessionStorage.setItem('id', id);
-      window.location.href="http://localhost:8888/Biblioteca1920/Front/edit_password.html";
+      window.location.href="http://localhost:8888/Biblioteca1920/Front/edit_libro.html";
     }
   </script>
 </html>
