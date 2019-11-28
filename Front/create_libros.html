@@ -10,7 +10,7 @@
 	}
   td {
     font-family: 'Helvetica';
-	}
+  }
   #contenedor {
     border: 2px solid black;
     background: #98C4F0;
@@ -20,7 +20,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-	}
+  }
   td {
     padding-top: 20px;
     text-align: left;
@@ -33,52 +33,39 @@
 </head>
 <body>
   <div id="contenedor">
-    <h1>Crear Libro</h1>
+    <h1>Crear libro</h1>
     <table>
       <tr>
-        <td>Title</td>
-        <td><input id="title" type="text" name="name" required size="35"></td>
-      </tr>
-      <tr>
-			<td>Description</td>
-			<td><input id="description" type="text" name="name" required size="35"></td>
-		</tr>
-  </table>
-  <button onclick="createLibro();">Crear Libro</button>
-</div>
-</body>
-<script>
-function createLibro() {
-			var title = document.getElementById('title').value;
-			var description = document.getElementById('description').value;
-      $.ajax({
-        url: 'http://localhost/GPASS/public/index.php/api/libro',
-        data: {
-			 		title: title,
-			 		description:description
-				},
-        type: 'POST',
-        dataType : 'json',
-        beforeSend: function(request) {
-          console.log(sessionStorage.getItem("token"));
-          request.setRequestHeader("Authorization", sessionStorage.getItem("token"));
-			 	},
-        success : function(data) {
-          console.log(data);
-          console.log(data.MESSAGE);
-          alert(data.MESSAGE);
-			 		window.location.href = "http://localhost:8888/Biblioteca1920/Front/main_libros.html";
-			 	},
-        error : function (xhr, status) {
-			 		console.log(xhr.responseJSON);
-			 		console.log(xhr.responseJSON.MESSAGE);
-			 		console.log(xhr.responseJSON['MESSAGE']);
-			 		alert(xhr.responseJSON['MESSAGE']);
-			 	},
-        complete : function(xhr, status) {
-					console.log('Petition complete');
-        }
-      });
-    }
-  </script>
+        <td>Name</td>
+        <td><input id="name" type="text" name="name" required size="35"></td>
+      </table>
+      <button onclick="createLibro();">Crear libro</button>
+    </div>
+  </body>
+  <script>
+  function createLibro() {
+    var name = document.getElementById('name').value;
+    $.ajax({
+      url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/category',
+      data: {
+        name: name,
+      },
+      type: 'POST',
+      dataType : 'json',
+      beforeSend: function(request) {
+        request.setRequestHeader("Authorization", sessionStorage.getItem("token"));
+      },
+      success : function(data) {
+        alert(data.MESSAGE);
+        window.location.href = "http://localhost:8888/Biblioteca1920/Front/main_libros.html";
+      },
+      error : function (xhr, status) {
+        alert(xhr.responseJSON['MESSAGE']);
+      },
+      complete : function(xhr, status) {
+        console.log('Petition complete');
+      }
+    });
+  }
+</script>
 </html>

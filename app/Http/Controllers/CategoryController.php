@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Category; 
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +27,7 @@ class CategoryController extends Controller
                 );
             }
             return response()->json([
-                'MESSAGE' => 'Dont have any category created yet'], 404
+                'MESSAGE' => 'Dont have any book created yet'], 404
             );
         }else{
             return response()->json([
@@ -57,13 +57,13 @@ class CategoryController extends Controller
             $userLogged = JWT::decode($header['Authorization'], $this->key, array('HS256'));
             if (empty($request->name)) {
                 return response()->json([
-                    'MESSAGE' => 'You have to put a name for your category'], 400
+                    'MESSAGE' => 'You have to put a name for your book'], 400
                 );
             }
             $repeatedCategory = Category::where('name', $request->name)->first();
             if (!is_null($repeatedCategory) && $repeatedCategory->user_id == $userLogged->id) {
                 return response()->json([
-                    'MESSAGE' => 'The specified category name already exists'], 400
+                    'MESSAGE' => 'The specified book name already exists'], 400
                 );
             }
             $category = new Category();
@@ -71,7 +71,7 @@ class CategoryController extends Controller
             $category->user_id = $userLogged->id;
             $category->save();
             return response()->json([
-                'MESSAGE' => 'The category has been created correctly'], 200
+                'MESSAGE' => 'The book has been created correctly'], 200
             );
         }else{
             return response()->json([
@@ -113,7 +113,7 @@ class CategoryController extends Controller
             $userLogged = JWT::decode($header['Authorization'], $this->key, array('HS256'));
             if (empty($request->name)) {
                 return response()->json([
-                    'MESSAGE' => 'You have to change the category name'], 400
+                    'MESSAGE' => 'You have to change the book name'], 400
                 );
             }
             $userCategories = Category::where('user_id', $userLogged->id)->get();
@@ -125,14 +125,14 @@ class CategoryController extends Controller
             foreach ($userCategories as $key => $value) {
                 if ($value->name == $request->name) {
                     return response()->json([
-                        'MESSAGE' => 'The specified category name is already created'], 400
+                        'MESSAGE' => 'The specified book name is already created'], 400
                     );
                 }
                 if ($value->user_id == $userLogged->id) {
                     $category->name = str_replace(' ', '', $request->name);
                     $category->save();
                     return response()->json([
-                        'MESSAGE' => 'The category has been updated correctly'], 200
+                        'MESSAGE' => 'The book has been updated correctly'], 200
                     );
                 }else{
                     return response()->json([
@@ -167,7 +167,7 @@ class CategoryController extends Controller
                 if ($value->user_id == $userLogged->id) {
                     $category->delete();
                     return response()->json([
-                        'MESSAGE' => 'The category has been deleted correctly'], 200
+                        'MESSAGE' => 'The book has been deleted correctly'], 200
                     );
                 }else{
                     return response()->json([

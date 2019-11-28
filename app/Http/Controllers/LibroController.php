@@ -26,7 +26,7 @@ class LibroController extends Controller
                 );
             }
             return response()->json([
-                'MESSAGE' => 'Dont have any category created yet'], 404
+                'MESSAGE' => 'Dont have any book created yet'], 404
             );
         }else{
             return response()->json([
