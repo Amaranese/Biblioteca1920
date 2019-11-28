@@ -1,94 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Main Page</title>
+  <title>Peticion Jquery</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <style>
-  td {
-    padding: 5px 5px;
-    font-family: 'Helvetica';
-    border-bottom: 1px solid white;
-    width: 180px;
-    height: 30px;
-  }
   h1 {
     font-family: 'Calibri';
+    margin-left: 10px;
+	}
+  td {
+    font-family: 'Helvetica';
+	}
+  #contenedor {
+    border: 2px solid black;
+    background: #98C4F0;
+    width: 20%;
+    height: 30%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+	}
+  td {
+    padding-top: 20px;
+    text-align: left;
   }
-  nav {
-    background: #ff009a;
-      /*text-align: left;*/
-      padding: 5px;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 1rem;
-      padding: 5px 20px;
-      font-family: 'Helvetica';
-    }
-    nav a:hover {
-      background: #001eff;
-    }
-    table {
-      width: 500px;
-    }
-    tr:nth-child(odd) {
-      background: #0085ff;
-    }
-    tr:nth-child(1) td {
-      background: #ffc100;
-      font-weight: bold;
-      color: black;
-    }
-    td:nth-child(1) {
-      border: 1px #ffc100 solid;
-      background: black;
-      font-weight: bold;
-    }
-  </style>
+  button {
+    margin-left: 150px;
+    margin-top: 20px;
+  }
+</style>
 </head>
 <body>
-  <h1>Crear Libro</h1>
-  <table>
-		<tr>
-			<td>Name</td>
-			<td><input id="name" type="text" name="name" required size="35"></td>
-      <td>Description</td>
-			<td><input id="description" type="text" description="description" required size="35"></td>
-</table>
-	<button onclick="createLibro();">Crear Libro</button>
-	</div>
+  <div id="contenedor">
+    <h1>Crear Libro</h1>
+    <table>
+      <tr>
+        <td>Title</td>
+        <td><input id="title" type="text" name="name" required size="35"></td>
+      </tr>
+      <tr>
+			<td>Description</td>
+			<td><input id="description" type="text" name="name" required size="35"></td>
+		</tr>
+  </table>
+  <button onclick="createLibro();">Crear Libro</button>
+</div>
 </body>
-
 <script>
-
-  function createLibro() {
-    var name = document.getElementById('name').value;
-    $.ajax({
-      url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/libro',
-      data: {
-        name: name,
-        description: description
-      },
-      type: 'POST',
-      dataType : 'json',
-
-			 	beforeSend: function(request) {
-			 		request.setRequestHeader("Authorization", sessionStorage.getItem("token"));
+function createLibro() {
+			var title = document.getElementById('title').value;
+			var description = document.getElementById('description').value;
+      $.ajax({
+        url: 'http://localhost/GPASS/public/index.php/api/libro',
+        data: {
+			 		title: title,
+			 		description:description
+				},
+        type: 'POST',
+        dataType : 'json',
+        beforeSend: function(request) {
+          console.log(sessionStorage.getItem("token"));
+          request.setRequestHeader("Authorization", sessionStorage.getItem("token"));
 			 	},
         success : function(data) {
-			 		alert(data.MESSAGE);
+          console.log(data);
+          console.log(data.MESSAGE);
+          alert(data.MESSAGE);
 			 		window.location.href = "http://localhost:8888/Biblioteca1920/Front/main_libros.html";
 			 	},
-
-			 	error : function (xhr, status) {
+        error : function (xhr, status) {
+			 		console.log(xhr.responseJSON);
+			 		console.log(xhr.responseJSON.MESSAGE);
+			 		console.log(xhr.responseJSON['MESSAGE']);
 			 		alert(xhr.responseJSON['MESSAGE']);
 			 	},
-
-			 	complete : function(xhr, status) {
+        complete : function(xhr, status) {
 					console.log('Petition complete');
-			 	}
-			 });
-		}
-	</script>
+        }
+      });
+    }
+  </script>
 </html>
