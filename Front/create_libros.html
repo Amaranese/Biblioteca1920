@@ -65,7 +65,7 @@
   function createLibro() {
     var name = document.getElementById('name').value;
     $.ajax({
-      url: 'http://localhost/GPASS/public/index.php/api/libro',
+      url: 'http://localhost:8888/Biblioteca1920/public/index.php/api/libro',
       data: {
         name: name,
         description: description
@@ -78,7 +78,7 @@
 			 	},
         success : function(data) {
 			 		alert(data.MESSAGE);
-			 		window.location.href = "http://localhost/GPASS/FrontendGpass/main_libros.html";
+			 		window.location.href = "http://localhost:8888/Biblioteca1920/Front/main_libros.html";
 			 	},
 
 			 	error : function (xhr, status) {
